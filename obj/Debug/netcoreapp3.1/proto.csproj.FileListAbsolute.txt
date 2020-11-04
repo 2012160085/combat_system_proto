@@ -1,0 +1,13 @@
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.exe
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.deps.json
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.runtimeconfig.json
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.runtimeconfig.dev.json
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.dll
+C:\Users\tvdi190345\Documents\proto\bin\Debug\netcoreapp3.1\proto.pdb
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.csprojAssemblyReference.cache
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.AssemblyInfoInputs.cache
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.AssemblyInfo.cs
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.csproj.CoreCompileInputs.cache
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.dll
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.pdb
+C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.genruntimeconfig.cache
