@@ -6,16 +6,13 @@ namespace proto
     {
         static void Main(string[] args)
         {
+            CombatCallbacks callbacks = new CombatCallbacks();
+            CombatUnit unit = new CombatUnit();
+            SkillNormalAttack skillNormalAttack = new SkillNormalAttack();
             
-            Callbacks c = new Callbacks();
-            Callbacks.instance = c;
-            A a = new A();
-            Console.WriteLine("A's name is " + a.name.ToString());
-            c.printName += a.print;
-            a.name.value = "BB";
-            Console.WriteLine("A's name is now " + a.name.ToString());
-            
-            c.printName();
+            skillNormalAttack.enrollToCallback();
+            unit.Attack(new Action());
+        
         }
     }
 }
