@@ -8,7 +8,7 @@ namespace proto
         {
             base.enrollToCallback();
         }
-        public override void OnAttackLateEffect(Action action)
+        public override void OnAttackLateEffect(CombatAction action)
         {
             base.OnAttackLateEffect(action);
             Console.WriteLine("override OnAttackLateEffect");

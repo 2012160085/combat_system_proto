@@ -2,8 +2,9 @@ using System;
 
 namespace proto
 {
-    class AttackAction : CombatAction
+    class CooldownAction : CombatAction
     {
         public Skill skill;
+        public int cooldownValue;
     }
 }

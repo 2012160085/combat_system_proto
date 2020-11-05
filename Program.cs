@@ -10,9 +10,15 @@ namespace proto
             CombatUnit unit = new CombatUnit();
             SkillNormalAttack skillNormalAttack = new SkillNormalAttack();
             
-            skillNormalAttack.enrollToCallback();
-            unit.Attack(new Action());
+            unit.AddSkill(skillNormalAttack);
+            unit.Attack(new CombatAction());
         
+        }
+        public void Start(){
+
+        }
+        public void Update(){
+
         }
     }
 }
