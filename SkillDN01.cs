@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 namespace proto
 {
@@ -15,7 +15,10 @@ namespace proto
 
         public ITargetable GetTarget(CombatAction action)
         {
-            return action.actor.GetCombatUnitsInDistance(reach,action.actor.team,action.actor.direction)[0] as ITargetable;
+            Unitfilter filter = new Unitfilter();
+            List<CombatUnit> units = filter.filter(CombatUnit.AllUnits);
+            units.Sort(filter.Compare);
+            return units[0] as ITargetable;
         }
     }
 }

@@ -6,19 +6,6 @@ namespace proto
     {
       public static List<CombatUnit> AllUnits = new List<CombatUnit>();
   
-      public List<CombatUnit> GetCombatUnitsInDistance(float distance,int team, int direction){
-        List<CombatUnit> units = new List<CombatUnit>();
-        foreach(CombatUnit unit in AllUnits){
-          if(MathF.Abs(position-unit.position) > distance)
-            continue;
-          if(team >= 0 && team != unit.team)
-            continue;
-          if(direction >= 0 && direction != unit.direction )
-            continue;
-          units.Add(unit);
-        }
-        return units;
-      }
       public enum AttackState{
         none,cast,ready,attack,delay
       }
