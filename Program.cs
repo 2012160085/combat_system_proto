@@ -8,7 +8,7 @@ namespace proto
         {
             CombatCallbacks callbacks = new CombatCallbacks();
             CombatUnit unit = new CombatUnit();
-            SkillNormalAttack skillNormalAttack = new SkillNormalAttack();
+            SkillDN01 skillNormalAttack = new SkillDN01();
             
             unit.AddSkill(skillNormalAttack);
             unit.Attack(new CombatAction());
