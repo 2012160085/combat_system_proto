@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System;
 namespace proto
 {
-    class CombatUnit
+    class CombatUnit : ITargetable
     {
       public static List<CombatUnit> AllUnits = new List<CombatUnit>();
   
       public enum AttackState{
         none,cast,ready,attack,delay
       }
+      public string name;
       public float position;
       public int direction;
       public int team;
@@ -40,6 +41,9 @@ namespace proto
                 //idle
         //else 
             //walk
+        CombatAction action = new CombatAction();
+        action.actor = this;
+        (skillList[0] as IAimable).GetTarget(action);
       }
       public void Cooldown(int spd){
         foreach(Skill skill in skillList){
@@ -57,5 +61,14 @@ namespace proto
       public void DoCombatTick(){
           
       }
+        public override string ToString()
+        {
+            return this.name;
+        }
+
+        public bool existTarget()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
