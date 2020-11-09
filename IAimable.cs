@@ -8,7 +8,7 @@ namespace proto
             get;
             set;
         }
-        public ITargetable GetTarget(CombatAction action);
+        public ITargetable GetTarget();
         public bool existTarget();
     }
 }

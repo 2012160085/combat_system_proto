@@ -13,7 +13,9 @@ namespace proto
             set;
         }
         public void Cooldown(CooldownAction obj);
-        public bool IsReady();
+        public bool IsCool();
         public void ResetCooldown();
+
+        public bool IsSkillReadyExceptCooldown();
     }
 }

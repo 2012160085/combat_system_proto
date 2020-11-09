@@ -28,12 +28,32 @@ namespace proto
       public void AddSkill(Skill skill){
         skillList.Add(skill);
         skill.enrollToCallback();
+        skill.owner = this;
+        skillList.Sort(new SkillComparer(SkillComparer.CompareMode.coolTime,SkillComparer.OrderBy.desc));
       }
       public void Attack(CombatAction action){
           //CombatCallbacks.instance.OnAttack(action);
           CombatCallbacks.instance.OnAttackLate(action);
       }
       public void DetermineState(){
+        Skill skillPrepared = null;
+        foreach(Skill skill in skillList){
+          if(skill.IsSkillReady()){
+            skillPrepared = skill;
+            break;
+          }
+        }
+        Skill skillPreparedExceptCooltime = null;
+        if(skillPrepared == null){
+          foreach(Skill skill in skillList){
+            ICooldownable cSkill = skill as ICooldownable;
+            if(cSkill!=null && cSkill.IsSkillReadyExceptCooldown()){
+              skillPreparedExceptCooltime = skill;
+              break;
+            }
+          }
+        }
+        
         //if there exist any usable skill
             //if skill is ready
                 //use skill
@@ -41,9 +61,7 @@ namespace proto
                 //idle
         //else 
             //walk
-        CombatAction action = new CombatAction();
-        action.actor = this;
-        (skillList[0] as IAimable).GetTarget(action);
+        
       }
       public void Cooldown(int spd){
         foreach(Skill skill in skillList){
