@@ -2,6 +2,7 @@ using System;
 
 namespace proto
 {
+    
     interface IAimable
     {
         public ITargetable Target{

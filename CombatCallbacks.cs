@@ -9,6 +9,7 @@ namespace proto
         public ActionDelegate OnAttack;
         public ActionDelegate OnAttackLate;
         public ActionDelegate OnCooldown;
+        public ActionDelegate OnWalk;
         public CombatCallbacks(){
             instance = this;
         }

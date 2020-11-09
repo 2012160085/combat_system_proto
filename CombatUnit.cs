@@ -53,7 +53,8 @@ namespace proto
             }
           }
         }
-        
+
+
         //if there exist any usable skill
             //if skill is ready
                 //use skill
@@ -79,14 +80,14 @@ namespace proto
       public void DoCombatTick(){
           
       }
-        public override string ToString()
-        {
-            return this.name;
-        }
+      public override string ToString()
+      {
+          return this.name;
+      }
 
-        public bool existTarget()
-        {
-            throw new NotImplementedException();
-        }
+      public bool existTarget()
+      {
+          throw new NotImplementedException();
+      }
     }
 }

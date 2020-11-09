@@ -12,7 +12,7 @@ namespace proto
             get;
             set;
         }
-        public void Cooldown(CooldownAction obj);
+        public void Cooldown(CooldownAction action);
         public bool IsCool();
         public void ResetCooldown();
 
