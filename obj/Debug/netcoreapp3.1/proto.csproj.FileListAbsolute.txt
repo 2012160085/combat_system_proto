@@ -11,3 +11,16 @@ C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.csproj.CoreCom
 C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.dll
 C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.pdb
 C:\Users\tvdi190345\Documents\proto\obj\Debug\netcoreapp3.1\proto.genruntimeconfig.cache
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.exe
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.deps.json
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.runtimeconfig.json
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.runtimeconfig.dev.json
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.dll
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\bin\Debug\netcoreapp3.1\proto.pdb
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.csprojAssemblyReference.cache
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.AssemblyInfoInputs.cache
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.AssemblyInfo.cs
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.csproj.CoreCompileInputs.cache
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.dll
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.pdb
+C:\Users\I-3 9100F 9GEN\Documents\git\combat_system_proto\obj\Debug\netcoreapp3.1\proto.genruntimeconfig.cache

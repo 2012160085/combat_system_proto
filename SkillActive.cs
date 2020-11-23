@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections;
 namespace proto
 {
     class SkillActive : Skill, ICooldownable
@@ -20,11 +20,11 @@ namespace proto
             return coolDown >= coolTime;
         }
         
-        public void Cooldown(CooldownAction action){
+        public void Cooldown(Hashtable action){
             if(IsCool())
                 throw new Exception(this + " 초과해서 쿨다운 시도");
             CombatCallbacks.instance.OnCooldown(action);
-            coolDown += action.cooldownValue;
+            coolDown +=  (int)action[Code.iCooldownValue];
         }
         public void ResetCooldown(){
             coolDown -= coolTime;

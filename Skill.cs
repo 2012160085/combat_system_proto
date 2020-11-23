@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections;
 namespace proto
 {
     class Skill
@@ -10,7 +10,7 @@ namespace proto
         public virtual void enrollToCallback(){
             CombatCallbacks.instance.OnAttackLate += OnAttackLateEffect;
         }
-        public virtual void OnAttackLateEffect(CombatAction action){
+        public virtual void OnAttackLateEffect(Hashtable action){
             Console.WriteLine("base OnAttackLateEffect");
         }
         public virtual bool IsSkillReady(){

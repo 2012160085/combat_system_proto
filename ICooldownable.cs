@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections;
 namespace proto
 {
     interface ICooldownable
@@ -12,7 +12,7 @@ namespace proto
             get;
             set;
         }
-        public void Cooldown(CooldownAction action);
+        public void Cooldown(Hashtable action);
         public bool IsCool();
         public void ResetCooldown();
 
