@@ -5,6 +5,6 @@ namespace proto
     interface ITargetable
     {
     
-        public bool existTarget();
+        public bool IsTargeted();
     }
 }

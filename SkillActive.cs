@@ -5,29 +5,38 @@ namespace proto
     class SkillActive : Skill, ICooldownable
     {
 
-        public override bool IsSkillReady(){
-            return IsCool();
+        public override bool IsSkillReady()
+        {
+            return IsCooldownCompleted();
         }
-        public virtual bool IsSkillReadyExceptCooldown(){
+        public virtual void SkillEffect(Hashtable action){
+            
+        }
+        public virtual bool IsSkillReadyExceptCooldown()
+        {
             return true;
         }
-        int ICooldownable.CoolTime { get => coolTime; set => coolTime = value; }
-        int ICooldownable.CoolDown { get => coolDown; set => coolDown = value; }
+        int ICooldownable.CooldownTimeNeeded { get => cooldownTimeNeeded; set => cooldownTimeNeeded = value; }
+        int ICooldownable.CooldownTime { get => cooldownTime; set => cooldownTime = value; }
+        int ICooldownable.CooldownTimePerTick { get => cooldownTimePerTick; set => cooldownTimePerTick = value; }
 
-        int coolDown;
-        int coolTime;
-        public bool IsCool(){
-            return coolDown >= coolTime;
+        int cooldownTime;
+        int cooldownTimeNeeded;
+        int cooldownTimePerTick;
+        public bool IsCooldownCompleted()
+        {
+            return cooldownTime >= cooldownTimeNeeded;
         }
-        
-        public void Cooldown(Hashtable action){
-            if(IsCool())
+        public void Cooldown(Hashtable action)
+        {
+            if (IsCooldownCompleted())
                 throw new Exception(this + " 초과해서 쿨다운 시도");
             CombatCallbacks.instance.OnCooldown(action);
-            coolDown +=  (int)action[Code.iCooldownValue];
+            cooldownTime += cooldownTimePerTick;
         }
-        public void ResetCooldown(){
-            coolDown -= coolTime;
+        public void ResetCooldownTime()
+        {
+            cooldownTime -= cooldownTimeNeeded;
         }
 
     }

@@ -11,11 +11,11 @@ namespace proto
         public enum AttackState
         {
             none, cast, ready, attack, delay
-        }
+        };
         public enum MoveState
         {
             idle, walk, knockback
-        }
+        };
         public string name;
         public float position;
         public int direction;
@@ -44,64 +44,105 @@ namespace proto
         public void Attack(Hashtable action)
         {
             //CombatCallbacks.instance.OnAttack(action);
+            AttackEffect(action);
             CombatCallbacks.instance.OnAttackLate(action);
+        }
+        public void AttackEffect(Hashtable action){
+            
+        }
+        private void SetAttackState(AttackState state)
+        {
+            attackState = state;
+        }
+        private void SetMoveState(MoveState state)
+        {
+            moveState = state;
+        }
+        public void CompleteCasting(){
+
         }
         public void DetermineState()
         {
-          switch (attackState){
-            case AttackState.none:
-              CaseAttackStateNone();
-              break;
-            case AttackState.cast:
-              CaseAttackStateCast();
-              break;
-          }
+            switch (attackState)
+            {
+                case AttackState.none:
+                    CaseAttackStateNone();
+                    break;
+                case AttackState.cast:
+                    CaseAttackStateCast();
+                    break;
+            }
 
 
         }
-        private void CaseAttackStateNone(){
-          Skill skillPrepared = null;
+        private void CaseAttackStateNone()
+        {
+            Skill skillPrepared = null;
+            foreach (Skill skill in skillList)
+            {
+                if (skill.IsSkillReady())
+                {
+                    skillPrepared = skill;
+                    break;
+                }
+            }
+            Skill skillPreparedExceptCooltime = null;
+            if (skillPrepared == null)
+            {
                 foreach (Skill skill in skillList)
                 {
-                    if (skill.IsSkillReady())
+                    ICooldownable cSkill = skill as ICooldownable;
+                    if (cSkill != null && cSkill.IsSkillReadyExceptCooldown())
                     {
-                        skillPrepared = skill;
+                        skillPreparedExceptCooltime = skill;
                         break;
                     }
                 }
-                Skill skillPreparedExceptCooltime = null;
-                if (skillPrepared == null)
-                {
-                    foreach (Skill skill in skillList)
-                    {
-                        ICooldownable cSkill = skill as ICooldownable;
-                        if (cSkill != null && cSkill.IsSkillReadyExceptCooldown())
-                        {
-                            skillPreparedExceptCooltime = skill;
-                            break;
-                        }
-                    }
-                }
+            }
 
-                //if there exist any usable skill
-                if (skillPrepared != null)
+            //if there exist any usable skill
+            if (skillPrepared != null)
+            {
+                skillFocused = skillPrepared;
+                moveState = MoveState.idle;
+                ICastable cSkill = skillPrepared as ICastable;
+                IReadiable rSkill = skillPrepared as IReadiable;
+                if (cSkill != null && !cSkill.IsCastExempted)
                 {
-                    moveState = MoveState.idle;
-                    attackState = skillPrepared.getStateOnUse();
+                    SetAttackState(AttackState.cast);
                 }
-                else if (skillPreparedExceptCooltime != null)
+                else if (rSkill != null && !rSkill.IsReadyExempted)
                 {
-                    moveState = MoveState.idle;
-                    attackState = AttackState.none;
+                    SetAttackState(AttackState.ready);
                 }
                 else
                 {
-                    moveState = MoveState.walk;
-                    attackState = AttackState.none;
+                    SetAttackState(AttackState.attack);
                 }
+            }
+            else if (skillPreparedExceptCooltime != null)
+            {
+                SetMoveState(MoveState.idle);
+                SetAttackState(AttackState.none);
+            }
+            else
+            {
+                SetMoveState(MoveState.walk);
+                SetAttackState(AttackState.none);
+            }
         }
-        private void CaseAttackStateCast(){
-          
+        private void CaseAttackStateCast()
+        {
+            ICastable skill = skillFocused as ICastable;
+            Hashtable action = new Hashtable();
+            if (skill.IsCastCompleted() || skill.IsCastExempted)
+            {
+
+            }
+            else
+            {
+                skill.Cast(action);
+            }
         }
         public void Cooldown(int spd)
         {
@@ -128,7 +169,7 @@ namespace proto
             return this.name;
         }
 
-        public bool existTarget()
+        public bool IsTargeted()
         {
             throw new NotImplementedException();
         }

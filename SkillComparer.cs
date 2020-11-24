@@ -26,8 +26,8 @@ namespace proto
         }
         public int Compare([AllowNull] Skill x, [AllowNull] Skill y)
         {
-            float coolX = x as ICooldownable == null ? float.MaxValue : (x as ICooldownable).CoolTime;
-            float coolY = y as ICooldownable == null ? float.MaxValue : (y as ICooldownable).CoolTime;
+            float coolX = x as ICooldownable == null ? float.MaxValue : (x as ICooldownable).CooldownTimeNeeded;
+            float coolY = y as ICooldownable == null ? float.MaxValue : (y as ICooldownable).CooldownTimeNeeded;
             int val = 0;
             if(coolX < coolY)
                 val = -1;

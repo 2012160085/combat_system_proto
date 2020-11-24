@@ -1,0 +1,5 @@
+IAimable : 타겟을 지정하는 기능
+ICastable : 캐스팅 스킬
+IDamagable : 피해입히는 기능
+IReadiable : 선딜레이 스킬
+ITargetable : 타겟으로 지정되는 기능

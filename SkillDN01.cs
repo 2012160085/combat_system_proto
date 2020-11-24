@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System;
+using System.Collections;
+
 namespace proto
 {
-    class SkillDN01 : SkillActive, IAimable
+    class SkillDN01 : SkillActive, IAimable, IDamagable
     {
 
         public SkillDN01(){
@@ -18,6 +20,8 @@ namespace proto
         public float reach = 3f;
 
         public ITargetable Target { get => target; set => target= value; }
+        public int DamagePoint { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         ITargetable target;
         public bool existTarget()
         {
@@ -44,6 +48,15 @@ namespace proto
             selectedUnits.Sort(new UnitComparer(UnitComparer.SortBy.distance));
             Console.WriteLine(this + " target found:" + selectedUnits[0]);
             return selectedUnits[0] as ITargetable;
+        }
+
+        public void Damage(Hashtable action)
+        {
+            IGetDamagable target =  (CombatUnit) action[Code.insTarget] as IGetDamagable;
+            if((bool)action[Code.bIsCritical]){
+                this.ResetCooldownTime();
+            }
+            target.GetDamage(action);
         }
     }
 }

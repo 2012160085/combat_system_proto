@@ -3,19 +3,25 @@ using System.Collections;
 namespace proto
 {
     interface ICooldownable
-    {   
-        public int CoolTime{
+    {
+        public int CooldownTimeNeeded
+        {
             get;
             set;
         }
-        public int CoolDown{
+        public int CooldownTime
+        {
+            get;
+            set;
+        }
+        public int CooldownTimePerTick
+        {
             get;
             set;
         }
         public void Cooldown(Hashtable action);
-        public bool IsCool();
-        public void ResetCooldown();
-
+        public bool IsCooldownCompleted();
+        public void ResetCooldownTime();
         public bool IsSkillReadyExceptCooldown();
     }
 }
