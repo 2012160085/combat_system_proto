@@ -23,6 +23,7 @@ namespace proto
         public bool IsCastCompleted();
         public void ResetCastTime();
 
+        public void OnSkillCastFinish();
         public bool IsCastExempted
         {
             get; set;
