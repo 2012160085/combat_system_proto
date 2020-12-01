@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 namespace proto
 {
@@ -9,7 +10,8 @@ namespace proto
             get;
             set;
         }
-        public ITargetable GetTarget();
-        public bool existTarget();
+        public ITargetable GetTarget(Hashtable acion);
+        public void SetTarget(Hashtable action);
+        public bool IsTargetExist();
     }
 }

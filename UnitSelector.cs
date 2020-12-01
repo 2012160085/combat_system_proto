@@ -15,13 +15,10 @@ namespace proto
         }
         public List<CombatUnit> Select(List<CombatUnit> units){
             List<CombatUnit> result = new List<CombatUnit>();
-            Console.WriteLine(filters.Count);
             foreach(CombatUnit unit in units){
-                Console.WriteLine("unit:"+unit);
                 bool filtered = false;
                 foreach(IUnitFiltable filter in filters){
                     if (!filter.filter(unit)){
-                        Console.WriteLine(filter.GetType()+ " filtered:"+unit);
                         filtered = true;
                         break;
                     }       
@@ -77,7 +74,7 @@ namespace proto
         }
         public bool filter(CombatUnit unit)
         {
-            Console.WriteLine("type:"+rangeType+" unit:"+unit.position+ " pivot:" + pivotPos+ " min:" + minDistance + " max:" + maxDistance);
+            Console.WriteLine(rangeType + "/" + unit.position + "/" + minDistance + "/" + maxDistance);
             switch(rangeType){
                 case RangeType.none:
                     return MathF.Abs(unit.position-pivotPos) <= maxDistance && minDistance <= MathF.Abs(unit.position-pivotPos) ;

@@ -4,15 +4,24 @@ namespace proto
 {
     interface IReadiable
     {   
+        public int BaseReadyTimeNeeded{
+            get;set;
+        }
         public int ReadyTimeNeeded{
             get;
             set;
         }
+        public void SetReadyTimeNeeded();
         public int ReadyTime{
             get;
             set;
         }
+        public void SetReadyTime();
         public int ReadyTimePerTick{
+            get;
+            set;
+        }
+        public int BaseReadyTimePerTick{
             get;
             set;
         }

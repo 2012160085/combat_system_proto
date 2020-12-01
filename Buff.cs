@@ -1,0 +1,6 @@
+namespace proto
+{
+    class Buff
+    {
+    }
+}

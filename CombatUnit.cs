@@ -52,6 +52,7 @@ namespace proto
         }
         private void SetAttackState(AttackState state)
         {
+            Console.WriteLine(this.ToString() + " AttackState[" + attackState.ToString() + "->" + state.ToString() +"]");
             attackState = state;
         }
         private void SetMoveState(MoveState state)
@@ -63,24 +64,33 @@ namespace proto
         }
         public void DetermineState()
         {
+            Console.WriteLine(this.ToString() +" DetermineState()");
             switch (attackState)
             {
                 case AttackState.none:
+                    Console.WriteLine(this.ToString() +" Attack State None");
                     CaseAttackStateNone();
                     break;
                 case AttackState.cast:
+                    Console.WriteLine(this.ToString() +" Attack State Cast");
                     CaseAttackStateCast();
                     break;
+                case AttackState.ready:
+                    Console.WriteLine(this.ToString() +" Attack State Ready");
+                    CaseAttackStateReady();
+                    break;
+                case AttackState.attack:
+                    Console.WriteLine(this.ToString() +" Attack State Attack");
+                    CaseAttackStateReady();
+                    break;
             }
-
-
         }
         private void CaseAttackStateNone()
         {
             Skill skillPrepared = null;
             foreach (Skill skill in skillList)
             {
-                if (skill.IsSkillReady())
+                if (skill.IsSkillPrepared())
                 {
                     skillPrepared = skill;
                     break;
@@ -137,36 +147,60 @@ namespace proto
             Hashtable action = new Hashtable();
             if (skill.IsCastCompleted() || skill.IsCastExempted)
             {
-
+                SetAttackState(AttackState.ready);
             }
             else
             {
                 skill.Cast(action);
             }
         }
-        public void Cooldown(int spd)
+
+        private void CaseAttackStateReady()
         {
-            foreach (Skill skill in skillList)
+            IReadiable skill = skillFocused as IReadiable;
+            Hashtable action = new Hashtable();
+            if (skill.IsReadyCompleted() || skill.IsReadyExempted)
             {
-                Hashtable action = new Hashtable();
-                action[Code.insActor] = this;
-                action[Code.insSkill] = skill;
-                action[Code.iCooldownValue] = spd;
-                ICooldownable activeSkill = skill as ICooldownable;
-                if (activeSkill != null)
-                {
-                    activeSkill.Cooldown(action);
-                }
-                CombatCallbacks.instance.OnCooldown(action);
+                SetAttackState(AttackState.ready);
+            }
+            else
+            {
+                skill.Ready(action);
+            }
+        }
+        private void CaseAttackStateAttack()
+        {
+            IEffectable skill = skillFocused as IEffectable;
+            Hashtable action = new Hashtable();
+            skill.Effect(action);
+            SetAttackState(AttackState.delay);
+        }
+        private void CaseAttackStateDelay()
+        {
+            IDelayable skill = skillFocused as IDelayable;
+            Hashtable action = new Hashtable();
+            if (skill.IsDelayCompleted() || skill.IsDelayExempted)
+            {
+                SetAttackState(AttackState.none);
+            }
+            else
+            {
+                skill.Delay(action);
             }
         }
         public void DoCombatTick()
         {
-
+            foreach(Skill skill in skillList){
+                ICooldownable cSkill = skill as ICooldownable;
+                if (cSkill != null && !cSkill.IsCooldownCompleted()){
+                    cSkill.Cooldown(Action.SimpleAction(0));
+                }
+            }
+            DetermineState();
         }
         public override string ToString()
         {
-            return this.name;
+            return "["+this.name+"]";
         }
 
         public bool IsTargeted()

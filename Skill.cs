@@ -13,13 +13,12 @@ namespace proto
         public virtual void OnAttackLateEffect(Hashtable action){
             Console.WriteLine("base OnAttackLateEffect");
         }
-        public virtual bool IsSkillReady(){
+        public virtual bool IsSkillPrepared(){
             return false;
         }
-
         public override string ToString()
         {
-            return skillCode;
+            return this.owner + " [" + skillCode + "]";
         }
     }
 }
