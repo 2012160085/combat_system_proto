@@ -32,6 +32,7 @@ namespace proto
             set;
         }
         public void SetCastTimePerTick(Hashtable action);
+        public void OnCastCompleted(Hashtable action);
         public void Cast(Hashtable action);
         public bool IsCastCompleted();
         public void ResetCastTime();

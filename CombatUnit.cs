@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using System.Text;
 
 namespace proto
 {
@@ -81,7 +82,7 @@ namespace proto
                     break;
                 case AttackState.attack:
                     Console.WriteLine(this.ToString() +" Attack State Attack");
-                    CaseAttackStateReady();
+                    CaseAttackStateAttack();
                     break;
             }
         }
@@ -161,7 +162,7 @@ namespace proto
             Hashtable action = new Hashtable();
             if (skill.IsReadyCompleted() || skill.IsReadyExempted)
             {
-                SetAttackState(AttackState.ready);
+                SetAttackState(AttackState.attack);
             }
             else
             {
@@ -206,6 +207,53 @@ namespace proto
         public bool IsTargeted()
         {
             throw new NotImplementedException();
+        }
+
+        public void PrintDetail(){
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\n=======================\n        ");
+            sb.Append(this.ToString());
+            sb.Append("\n=======================\n");
+            sb.Append("\nSkill focused : ");
+            if (skillFocused != null)
+                sb.Append(skillFocused.skillCode);
+            sb.Append("\nAttack state : ");
+            sb.Append(attackState);
+            sb.Append("\nMove state : ");
+            sb.Append(moveState);
+            for (int i = 0; i < skillList.Count; i++){
+                sb.Append("\n--Skill");
+                sb.Append(i);
+                sb.Append("--");
+                sb.Append("\nSkill name : ");
+                sb.Append(skillList[i].skillCode);
+                sb.Append("\nSkill Cooldown : ");
+                ICooldownable cSkill = skillList[i] as ICooldownable;
+                if (cSkill != null){
+                    sb.Append(cSkill.CooldownTime + "/" + cSkill.CooldownTimeNeeded);
+                    if(cSkill.IsSkillReadyExceptCooldown()){
+                        sb.Append(": Skill Ready Except Cooldown");
+                    }
+                }else{
+                    sb.Append("Not Cooldownable");
+                }
+                sb.Append("\nSkill Ready : ");
+                IReadiable rSkill = skillList[i] as IReadiable;
+                if (rSkill != null){
+                    sb.Append(rSkill.ReadyTime + "/" + rSkill.ReadyTimeNeeded);
+                }else{
+                    sb.Append("Not Readiable");
+                }
+                sb.Append("\nSkill Delay : ");
+                IDelayable dSkill = skillList[i] as IDelayable;
+                if (dSkill != null){
+                    sb.Append(dSkill.DelayTime + "/" + dSkill.DelayTimeNeeded);
+                }else{
+                    sb.Append("Not Delayable");
+                }
+            }
+            sb.Append("\n=======================");
+            Console.WriteLine(sb);
         }
     }
 }

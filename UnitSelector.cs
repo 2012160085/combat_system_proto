@@ -74,7 +74,7 @@ namespace proto
         }
         public bool filter(CombatUnit unit)
         {
-            Console.WriteLine(rangeType + "/" + unit.position + "/" + minDistance + "/" + maxDistance);
+        
             switch(rangeType){
                 case RangeType.none:
                     return MathF.Abs(unit.position-pivotPos) <= maxDistance && minDistance <= MathF.Abs(unit.position-pivotPos) ;

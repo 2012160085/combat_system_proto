@@ -32,6 +32,7 @@ namespace proto
             set;
         }
         public void SetCooldownTimePerTick(Hashtable action);
+        public void OnCooldownCompleted(Hashtable action);
         public void Cooldown(Hashtable action);
         public bool IsCooldownCompleted();
         public void ResetCooldownTime();

@@ -32,6 +32,8 @@ namespace proto
             set;
         }
         public void SetDelayTimePerTick(Hashtable action);
+
+        public void OnDelayCompleted(Hashtable action);
         public void Delay(Hashtable action);
         public bool IsDelayExempted{
             get;set;

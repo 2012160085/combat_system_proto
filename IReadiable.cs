@@ -16,7 +16,7 @@ namespace proto
             get;
             set;
         }
-        public void SetReadyTime();
+        public void SetReadyTime(Hashtable action);
         public int ReadyTimePerTick{
             get;
             set;
@@ -25,6 +25,7 @@ namespace proto
             get;
             set;
         }
+        public void OnReadyCompleted(Hashtable action);
         public void Ready(Hashtable action);
         public bool IsReadyCompleted();
         public void ResetReadyTime();

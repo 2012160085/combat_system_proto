@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace proto
 {
-    class SkillDN02 : Skill, IEffectable, IAimable, IDamagable, IDelayable, IReadiable, ICooldownable
+    class SkillDN03 : Skill, IEffectable, IAimable, IDamagable, IDelayable, IReadiable, ICooldownable
     {
         private float baseReach;
         public float BaseReach { get => baseReach; set => baseReach = value; }
@@ -15,17 +15,17 @@ namespace proto
             reach = baseReach;
         }
 
-        public SkillDN02()
+        public SkillDN03()
         {
         }
-        public SkillDN02(CombatUnit unit)
+        public SkillDN03(CombatUnit unit)
         {
-            skillCode = "DN02";
-            baseDelayTimeNeeded = 10;
+            skillCode = "DN03";
+            baseDelayTimeNeeded = 13;
             baseDelayTimePerTick = 1;
-            baseReadyTimeNeeded = 10;
+            baseReadyTimeNeeded = 13;
             baseReadyTimePerTick = 1;
-            baseCooldownTimeNeeded = 10;
+            baseCooldownTimeNeeded = 13;
             baseCooldownTimePerTick = 1;
             baseReach = 3.5f;
 
@@ -98,9 +98,9 @@ namespace proto
 
         public void Damage(Hashtable action)
         {
-            CombatCallbacks.instance.RaiseOnDamage(action);
+            CombatCallbacks.instance.OnDamage(action);
             ((IGetDamagable)action["target"]).GetDamage(action);
-            CombatCallbacks.instance.RaiseOnDamageLate(action);
+            CombatCallbacks.instance.OnDamageLate(action);
         }
 
         public void Delay(Hashtable action)
@@ -115,8 +115,6 @@ namespace proto
         public void Effect(Hashtable action)
         {
             Console.WriteLine(this.ToString() + " skill effects");
-            action["target"] = this.target;
-            action["damage"] = this.damagePoint;
             Damage(action);
         }
 

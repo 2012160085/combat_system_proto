@@ -22,6 +22,7 @@ namespace proto
 
             CombatUnit unit1 = new CombatUnit();
             unit1.AddSkill(new SkillDN02(unit1));
+            unit1.AddSkill(new SkillDN03(unit1));
             unit1.name = "unit1";
             unit1.direction = 1;
             unit1.position = -1;
@@ -44,6 +45,10 @@ namespace proto
                 foreach (CombatUnit unit in CombatUnit.AllUnits)
                 {
                     unit.DoCombatTick();
+                }
+                foreach (CombatUnit unit in CombatUnit.AllUnits)
+                {
+                    unit.PrintDetail();
                 }
                 Console.WriteLine("----Next Tick---");
                 Thread.Sleep(1000);
