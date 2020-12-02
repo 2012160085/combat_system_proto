@@ -5,7 +5,7 @@ using System.Text;
 
 namespace proto
 {
-    class CombatUnit : ITargetable
+    class CombatUnit : ITargetable, IGetDamagable
     {
         public static List<CombatUnit> AllUnits = new List<CombatUnit>();
         public Skill skillFocused;
@@ -21,10 +21,15 @@ namespace proto
         public float position;
         public int direction;
         public int team;
-        public int hp;
-        public int atk;
-        public int spd;
 
+        public CharStats BaseCharStats;
+        public CharStats BuffCharStats;
+        public CharStats CurCharStats;
+        public DetStats BaseDetStats;
+        public DetStats BuffDetStats;
+        public DetStats CurDetStats;
+
+        
         public AttackState attackState;
         public MoveState moveState;
         public CombatUnit()
@@ -34,7 +39,7 @@ namespace proto
             AllUnits.Add(this);
         }
         public List<Skill> skillList;
-
+        public List<Buff> buffList;
         public void AddSkill(Skill skill)
         {
             skillList.Add(skill);
@@ -44,44 +49,46 @@ namespace proto
         }
         public void Attack(Hashtable action)
         {
-            //CombatCallbacks.instance.OnAttack(action);
+            CombatCallbacks.instance.RaiseOnAttack(action);
             AttackEffect(action);
-            CombatCallbacks.instance.OnAttackLate(action);
+            CombatCallbacks.instance.RaiseOnAttackLate(action);
         }
-        public void AttackEffect(Hashtable action){
-            
+        public void AttackEffect(Hashtable action)
+        {
+
         }
         private void SetAttackState(AttackState state)
         {
-            Console.WriteLine(this.ToString() + " AttackState[" + attackState.ToString() + "->" + state.ToString() +"]");
+            Console.WriteLine(this.ToString() + " AttackState[" + attackState.ToString() + "->" + state.ToString() + "]");
             attackState = state;
         }
         private void SetMoveState(MoveState state)
         {
             moveState = state;
         }
-        public void CompleteCasting(){
+        public void CompleteCasting()
+        {
 
         }
         public void DetermineState()
         {
-            Console.WriteLine(this.ToString() +" DetermineState()");
+            Console.WriteLine(this.ToString() + " DetermineState()");
             switch (attackState)
             {
                 case AttackState.none:
-                    Console.WriteLine(this.ToString() +" Attack State None");
+                    Console.WriteLine(this.ToString() + " Attack State None");
                     CaseAttackStateNone();
                     break;
                 case AttackState.cast:
-                    Console.WriteLine(this.ToString() +" Attack State Cast");
+                    Console.WriteLine(this.ToString() + " Attack State Cast");
                     CaseAttackStateCast();
                     break;
                 case AttackState.ready:
-                    Console.WriteLine(this.ToString() +" Attack State Ready");
+                    Console.WriteLine(this.ToString() + " Attack State Ready");
                     CaseAttackStateReady();
                     break;
                 case AttackState.attack:
-                    Console.WriteLine(this.ToString() +" Attack State Attack");
+                    Console.WriteLine(this.ToString() + " Attack State Attack");
                     CaseAttackStateAttack();
                     break;
             }
@@ -191,9 +198,11 @@ namespace proto
         }
         public void DoCombatTick()
         {
-            foreach(Skill skill in skillList){
+            foreach (Skill skill in skillList)
+            {
                 ICooldownable cSkill = skill as ICooldownable;
-                if (cSkill != null && !cSkill.IsCooldownCompleted()){
+                if (cSkill != null && !cSkill.IsCooldownCompleted())
+                {
                     cSkill.Cooldown(Action.SimpleAction(0));
                 }
             }
@@ -201,7 +210,7 @@ namespace proto
         }
         public override string ToString()
         {
-            return "["+this.name+"]";
+            return "[" + this.name + "]";
         }
 
         public bool IsTargeted()
@@ -209,7 +218,8 @@ namespace proto
             throw new NotImplementedException();
         }
 
-        public void PrintDetail(){
+        public void PrintDetail()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("\n=======================\n        ");
             sb.Append(this.ToString());
@@ -221,7 +231,8 @@ namespace proto
             sb.Append(attackState);
             sb.Append("\nMove state : ");
             sb.Append(moveState);
-            for (int i = 0; i < skillList.Count; i++){
+            for (int i = 0; i < skillList.Count; i++)
+            {
                 sb.Append("\n--Skill");
                 sb.Append(i);
                 sb.Append("--");
@@ -229,31 +240,46 @@ namespace proto
                 sb.Append(skillList[i].skillCode);
                 sb.Append("\nSkill Cooldown : ");
                 ICooldownable cSkill = skillList[i] as ICooldownable;
-                if (cSkill != null){
+                if (cSkill != null)
+                {
                     sb.Append(cSkill.CooldownTime + "/" + cSkill.CooldownTimeNeeded);
-                    if(cSkill.IsSkillReadyExceptCooldown()){
+                    if (cSkill.IsSkillReadyExceptCooldown())
+                    {
                         sb.Append(": Skill Ready Except Cooldown");
                     }
-                }else{
+                }
+                else
+                {
                     sb.Append("Not Cooldownable");
                 }
                 sb.Append("\nSkill Ready : ");
                 IReadiable rSkill = skillList[i] as IReadiable;
-                if (rSkill != null){
+                if (rSkill != null)
+                {
                     sb.Append(rSkill.ReadyTime + "/" + rSkill.ReadyTimeNeeded);
-                }else{
+                }
+                else
+                {
                     sb.Append("Not Readiable");
                 }
                 sb.Append("\nSkill Delay : ");
                 IDelayable dSkill = skillList[i] as IDelayable;
-                if (dSkill != null){
+                if (dSkill != null)
+                {
                     sb.Append(dSkill.DelayTime + "/" + dSkill.DelayTimeNeeded);
-                }else{
+                }
+                else
+                {
                     sb.Append("Not Delayable");
                 }
             }
             sb.Append("\n=======================");
             Console.WriteLine(sb);
+        }
+
+        public void GetDamage(Hashtable action)
+        {
+
         }
     }
 }

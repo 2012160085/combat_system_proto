@@ -99,7 +99,8 @@ namespace proto
         public void Damage(Hashtable action)
         {
             CombatCallbacks.instance.RaiseOnDamage(action);
-            ((IGetDamagable)action["target"]).GetDamage(action);
+            CombatUnit targetUnit = (CombatUnit)action["target"];
+            (targetUnit as IGetDamagable).GetDamage(action);
             CombatCallbacks.instance.RaiseOnDamageLate(action);
         }
 
@@ -119,7 +120,9 @@ namespace proto
             action["damage"] = this.damagePoint;
             Damage(action);
         }
-
+        public void SetDamagePoint(Hashtable action){
+            this.DamagePoint = this.owner.CurDetStats.DistanceAttackPoint;
+        }
         public bool IsTargetExist()
         {
             target = GetTarget(Action.SimpleAction(reach));
@@ -257,6 +260,7 @@ namespace proto
         {
             SetCooldownTime(Action.SimpleAction(0));
         }
+
     }
 
 }
